@@ -1,12 +1,19 @@
 package com.project.shopapp.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +21,7 @@ public class Order {
 @ManyToOne
 @JoinColumn(name = "user_id")
     private User user;
-@Column(name = "full_name")
+@Column(name = "fullname")
 private String fullName ;
 @Column(name = "email")
 private String email ;

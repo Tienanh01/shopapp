@@ -31,8 +31,8 @@ private String note ;
 private Float totalMoney ;
 @JsonProperty("shipping_method")
 private String shippingMethod ;
-@JsonProperty("shopping_address")
-private String shoppingAddress;
+//@JsonProperty("shopping_address")
+//private String shoppingAddress;
 @JsonProperty("payment_method")
 private String paymentMethod ;
 

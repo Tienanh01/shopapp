@@ -5,8 +5,16 @@ import com.project.shopapp.dtos.ProductDTO;
 import com.project.shopapp.dtos.ProductImageDTO;
 import com.project.shopapp.models.Product;
 import com.project.shopapp.models.ProductImages;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +31,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -52,6 +61,31 @@ return ResponseEntity.ok(newProduct);
     }
 
     }
+@PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(
+        @PathVariable("id") Long id,
+        @Valid @RequestBody ProductDTO productDTO,
+            BindingResult result
+    ) {
+        try {
+//            if (result.hasErrors()) {
+//                List<String> errorMessages = result.getFieldErrors()
+//                        .stream()
+//                        .map(FieldError::getDefaultMessage)
+//                        .toList();
+//                return ResponseEntity.badRequest().body(errorMessages);
+//            }
+            Product updatedProduct = productService.updateProduct(id,productDTO);
+
+
+            return ResponseEntity.ok(updatedProduct);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
     @PostMapping(value = "uploads/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
     public ResponseEntity<?> uploadImages (
             @ModelAttribute("file") List<MultipartFile> files
@@ -105,23 +139,28 @@ return ResponseEntity.ok(newProduct);
     }
 
     @GetMapping("")
-    public ResponseEntity<String> getProducts(
-            @RequestParam("page") int page,
-            @RequestParam("limit") int limit
+    public ResponseEntity<?> getProducts(
+            @RequestParam(value = "page" , defaultValue = "0") int page,
+            @RequestParam(value = "limit",defaultValue = "10") int limit
     ) {
-        return ResponseEntity.ok("getProducts here");
+//        PageRequest pageRequest =  ;
+        Page<Product> list =  productService.getAllProduct(PageRequest.of(page,limit));
+        return ResponseEntity.ok(list);
     }
 
     //http://localhost:8088/api/v1/products/6
     @GetMapping("/{id}")
-    public ResponseEntity<String> getProductById(
-            @PathVariable("id") String productId
+    public ResponseEntity<?> getProductById(
+            @PathVariable("id") Long productId
     ) {
-        return ResponseEntity.ok("Product with ID: " + productId);
+      Product product =   productService.getProductById(productId);
+        return ResponseEntity.ok(product);
     }
-
+    @Operation(summary = "Delete a product ", description = "Delete a product  status done ")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable long id) {
-        return ResponseEntity.ok(String.format("Product with id = %d deleted successfully", id));
+
+    public ResponseEntity<?> deleteProduct(@PathVariable long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok().body("Success ");
     }
 }

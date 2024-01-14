@@ -1,7 +1,10 @@
 package com.project.shopapp.controllers;
 
+import com.project.shopapp.Service.OrderDetailService;
 import com.project.shopapp.dtos.OderDetailDTO;
+import com.project.shopapp.models.OrderDetails;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -13,7 +16,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("${api.prefix}/order_details")
 public class OderDetailController {
-
+    @Autowired
+    private OrderDetailService orderDetailService;
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody @Valid OderDetailDTO orderdetail ,
                                     BindingResult result){
@@ -23,7 +27,8 @@ public class OderDetailController {
                 return ResponseEntity.badRequest().body(errorMessage);
             }
 
-        return  ResponseEntity.ok("created orderdetail here ");
+        OrderDetails orderDetails = orderDetailService.createOrderDetail(orderdetail);
+        return  ResponseEntity.ok(orderDetails);
 
     }
     @GetMapping("/{id}")

@@ -60,11 +60,12 @@ public class ProductService implements IProductService{
 
     @Override
     public Page<Product> getAllProduct(PageRequest pageRequest) {
+
         return productRepository.findAll(pageRequest) ;
     }
 
     @Override
-    public Product updateProduct(long id, ProductDTO productDTO) {
+    public Product updateProduct(Long id, ProductDTO productDTO) {
 
         Product existingProduct = getProductById(id);
         if(existingProduct != null){

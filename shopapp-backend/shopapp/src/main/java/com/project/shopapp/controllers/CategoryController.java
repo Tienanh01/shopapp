@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/categories")
+@RequestMapping("${api.prefix}/categories")
 //@Validated
 
 public class CategoryController {
@@ -31,10 +31,10 @@ public class CategoryController {
     //Hiện tất cả các categories
     @GetMapping("") //http://localhost:8088/api/v1/categories?page=1&limit=10
     public ResponseEntity<?> getAllCategories(
-            @RequestParam("page")     int page,
-            @RequestParam("limit")    int limit
+            @RequestParam(name = "page" , defaultValue = "1" )     int page,
+            @RequestParam(value = "limit",defaultValue = "100")    int limit
     ) {
-        return ResponseEntity.ok(categoryService.getAllCategories().toString());
+        return ResponseEntity.ok(categoryService.getAllCategories());
 //        return ResponseEntity.ok(String.format("getAllCategories, page = %d, limit = %d", page, limit));
     }
 

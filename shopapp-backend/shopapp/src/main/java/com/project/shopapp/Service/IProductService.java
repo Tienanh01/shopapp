@@ -14,7 +14,7 @@ public interface IProductService {
 
     Page<Product> getAllProduct(PageRequest pageRequest);
 
-    Product updateProduct(long id , ProductDTO productDTO);
+    Product updateProduct(Long id , ProductDTO productDTO);
 
     void deleteProduct(long id);
 
