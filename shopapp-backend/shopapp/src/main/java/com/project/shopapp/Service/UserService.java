@@ -8,10 +8,15 @@ import com.project.shopapp.models.Role;
 import com.project.shopapp.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
@@ -40,13 +45,20 @@ public class UserService implements IUserService {
         }
         newUser.setRole(exitsRole);
         if(userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0){
-
+            String password = userDTO.getPassword();
+            String encodedPassword = passwordEncoder.encode(password);
+            newUser.setPassword(encodedPassword);
         }
         return userRepository.save(newUser);
     }
 
     @Override
     public String login(String phoneNumber, String password) {
+        Optional<User> optionalUser =  userRepository.findByPhoneNumber(phoneNumber);
+        if(optionalUser.isEmpty()){
+
+        }
+
         return null;
     }
 }
