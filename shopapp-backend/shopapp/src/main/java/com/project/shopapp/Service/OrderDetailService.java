@@ -58,6 +58,13 @@ public class OrderDetailService implements IOrderDetailService{
     }
 
     @Override
+    public List<OrderDetails> findByOrderId(Long orderId) {
+        List<OrderDetails> list = orderDetailRepository.findByOrderId(orderId);
+
+        return  list;
+    }
+
+    @Override
     public OrderDetails updateOrderDetails(long orderDetailDto, OderDetailDTO category) {
         return null;
     }

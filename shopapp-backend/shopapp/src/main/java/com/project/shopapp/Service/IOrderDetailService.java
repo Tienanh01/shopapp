@@ -11,6 +11,8 @@ public interface IOrderDetailService {
     OrderDetails createOrderDetail (OderDetailDTO orderdetail );
     OrderDetails getOrderDetailsById(Long id);
     List<OrderDetails> getAllOrderDetails();
+
+    List<OrderDetails> findByOrderId(Long orderId);
     OrderDetails updateOrderDetails(long orderDetailDto , OderDetailDTO category);
     void deleteOrderDetails(Long id) ;
 }

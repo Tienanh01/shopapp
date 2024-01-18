@@ -38,7 +38,10 @@ public class OderDetailController {
     }
     @GetMapping("/order/{orderId}")
     public ResponseEntity<?> getOrderDetail(@Valid @PathVariable("orderId") Long orderId ){
-        return  ResponseEntity.ok("get order detail with order id ");
+
+        List<OrderDetails> list = orderDetailService.findByOrderId(orderId);
+
+        return  ResponseEntity.ok(list);
     }
     @PutMapping("/{orderId}")
     public ResponseEntity<?> updateOrderDetail(
