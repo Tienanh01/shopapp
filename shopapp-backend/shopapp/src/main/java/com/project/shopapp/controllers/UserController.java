@@ -3,6 +3,7 @@ package com.project.shopapp.controllers;
 import com.project.shopapp.Service.UserService;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.dtos.UserLoginDTO;
+import com.project.shopapp.exceptions.DataNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +49,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(
-            @Valid @RequestBody UserLoginDTO userLoginDTO) {
+            @Valid @RequestBody UserLoginDTO userLoginDTO) throws DataNotFoundException {
         // Kiểm tra thông tin đăng nhập và sinh token
         // Trả về token trong response
+        userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
+
         return ResponseEntity.ok("some token");
     }
 }
