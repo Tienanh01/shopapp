@@ -2,18 +2,21 @@ package com.project.shopapp.Test;
 
 
 import jakarta.xml.bind.annotation.*;
+import lombok.Data;
 
+@Data
 @XmlRootElement(name = "employee")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
 
+
     @XmlAttribute(name = "id")
     private int id;
 
-    @XmlElement(name = "name")
+    @XmlAttribute(name = "name")
     private String name;
 
-    @XmlElement(name = "salary")
+    @XmlAttribute(name = "salary")
     private float salary;
 
     @XmlTransient

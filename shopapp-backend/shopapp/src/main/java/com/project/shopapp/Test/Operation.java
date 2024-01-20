@@ -5,24 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 @Data
-@XmlRootElement(name = "resource")
+@XmlRootElement(name = "operation")
 @XmlAccessorType(XmlAccessType.FIELD)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Resource {
+public class Operation {
 
-    @XmlAttribute(name = "method")
-    private String method;
-
-    @XmlAttribute(name = "path")
-    private String path;
-
-    @XmlElement(name = "description")
-    private String description;
+    @XmlAttribute(name = "name")
+    private String name;
 
     @XmlElement(name = "call-query")
-    private CallQuery callQuery;
+    private List<CallQuery> callQuery;
 
     // Các phương thức getter và setter
 

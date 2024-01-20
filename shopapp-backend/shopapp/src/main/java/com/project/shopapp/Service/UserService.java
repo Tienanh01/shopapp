@@ -7,9 +7,12 @@ import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.Role;
 import com.project.shopapp.models.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,9 +31,8 @@ public class UserService implements IUserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-
-    private AuthenticationManager authenticationManager ;
+    @Autowired
+    private  AuthenticationManager authenticationManager ;
     @Override
     public User createUser(UserDTO userDTO) {
         String phoneNumber = userDTO.getPhoneNumber();
@@ -69,8 +72,13 @@ public class UserService implements IUserService {
         }
         User exitingUser = optionalUser.get();
         // check password
+if(exitingUser.getFacebookAccountId() == 0 && exitingUser.getGoogleAccountId() == 0 ){
+    if( !passwordEncoder.matches(password , exitingUser.getPassword())){
+        throw new BadCredentialsException("Wrong phone number or password ");
+    }
 
 
+}
         // authenticate with  spring security
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(phoneNumber, password);
         authenticationManager.authenticate(authenticationToken);

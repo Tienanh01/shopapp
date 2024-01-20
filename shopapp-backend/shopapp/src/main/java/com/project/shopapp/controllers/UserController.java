@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("${api.prefix}/users")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -52,8 +52,8 @@ public class UserController {
             @Valid @RequestBody UserLoginDTO userLoginDTO) throws DataNotFoundException {
         // Kiểm tra thông tin đăng nhập và sinh token
         // Trả về token trong response
-        userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
+        String token = userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
 
-        return ResponseEntity.ok("some token");
+        return ResponseEntity.ok(token);
     }
 }
