@@ -28,6 +28,7 @@ public class JwtTokenUtil {
     // sinh ra token , co screct key ,
     public String gennerateToken (User user){
         Map<String, Objects> claims = new HashMap<>();
+
         try {
             String token = Jwts.builder()
                     .setClaims(claims)
@@ -42,7 +43,7 @@ public class JwtTokenUtil {
         }
     }
 
-    private Key setSignInKey(){
+    private Key getSignInKey(){
         byte[] bytes = Decoders.BASE64.decode(secrectKey);
         return Keys.hmacShaKeyFor(bytes);
     }

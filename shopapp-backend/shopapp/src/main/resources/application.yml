@@ -9,7 +9,7 @@ spring:
     url: jdbc:mysql://localhost:3306/shopapp?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123abc@A
+    password: 123456
   jpa:
     show-sql: true
     hibernate:
@@ -19,6 +19,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
 
+
+  security:
+    user:
+      username: user
+      password: password
 api:
   prefix: api/v1
 jwt:

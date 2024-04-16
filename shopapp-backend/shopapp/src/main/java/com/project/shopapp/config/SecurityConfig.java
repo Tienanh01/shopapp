@@ -23,9 +23,10 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(){
 //        return "unique filed user password";
         return phoneNumber ->
-            userRepository.findByPhoneNumber(phoneNumber).orElseThrow(
-                    () -> new UsernameNotFoundException(" Can not find user with phone number")
-            );
+                (UserDetails) userRepository.findByPhoneNumber(phoneNumber)
+                        .orElseThrow(
+                        () -> new UsernameNotFoundException(" Can not find user with phone number")
+                );
     }
     @Bean
     public PasswordEncoder passwordEncoder(){

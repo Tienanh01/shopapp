@@ -1,18 +1,18 @@
 package com.project.shopapp.controllers;
 
+import com.project.shopapp.Repository.RoleRepository;
+import com.project.shopapp.Repository.UserRepository;
 import com.project.shopapp.Service.UserService;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.dtos.UserLoginDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
+import com.project.shopapp.models.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +20,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
+
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository ;
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(
@@ -52,8 +58,19 @@ public class UserController {
             @Valid @RequestBody UserLoginDTO userLoginDTO) throws DataNotFoundException {
         // Kiểm tra thông tin đăng nhập và sinh token
         // Trả về token trong response
-        userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
+      String token =   userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
 
-        return ResponseEntity.ok("some token");
+        return ResponseEntity.ok(token);
+    }
+    @GetMapping("/getUser")
+    public Object userList(){
+        return userRepository.findAll();
+
+    }
+
+    @GetMapping("/getUserByUserName")
+    public Object userList(@RequestParam("phone") String phonenumber){
+        return userRepository.findByPhoneNumber(phonenumber);
+
     }
 }

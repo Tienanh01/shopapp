@@ -20,10 +20,10 @@ public class ObjectToXml {
 
 
         // Write data to console
-        marshallerObj.marshal(dept, System.out);
-
-        // Write data to file xml
-        marshallerObj.marshal(dept, new FileOutputStream("department.xml"));
+//        marshallerObj.marshal(dept, System.out);
+//
+//        // Write data to file xml
+//        marshallerObj.marshal(dept, new FileOutputStream("department.xml"));
     }
 
     private static Department getDepartment() {

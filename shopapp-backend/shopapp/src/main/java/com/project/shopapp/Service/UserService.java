@@ -2,15 +2,16 @@ package com.project.shopapp.Service;
 
 import com.project.shopapp.Repository.RoleRepository;
 import com.project.shopapp.Repository.UserRepository;
-import com.project.shopapp.components.JwtTokenUtil;
+//import com.project.shopapp.components.JwtTokenUtil;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.Role;
 import com.project.shopapp.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,11 @@ public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository ;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+//    @Autowired
+//    private JwtTokenUtil jwtTokenUtil;
 
 
-    private AuthenticationManager authenticationManager ;
+//    private AuthenticationManager authenticationManager ;
     @Override
     public User createUser(UserDTO userDTO) {
         String phoneNumber = userDTO.getPhoneNumber();
@@ -71,12 +72,13 @@ public class UserService implements IUserService {
         // check password
 
 
-        // authenticate with  spring security
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(phoneNumber, password);
-        authenticationManager.authenticate(authenticationToken);
-
-
-
-        return jwtTokenUtil.gennerateToken(exitingUser);
+//        // authenticate with  spring security
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(phoneNumber, password);
+//        authenticationManager.authenticate(authenticationToken);
+//
+//
+//
+//        return jwtTokenUtil.gennerateToken(exitingUser);
+        return  null;
     }
 }
