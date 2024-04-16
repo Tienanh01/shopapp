@@ -3,6 +3,7 @@ package com.project.shopapp.config;
 import com.project.shopapp.Repository.RoleRepository;
 import com.project.shopapp.Repository.UserRepository;
 import com.project.shopapp.Service.UserService;
+import com.project.shopapp.Filter.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -62,7 +63,9 @@ public class WebSecurityConfig  { // (1)
 ////                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 //        requestMatchers("/api/auth/login").permitAll()
 //                            .anyRequest().authenticated();
-                }) ;
+                });
+
+    }
 //                .httpBasic(Customizer.withDefaults());
 //
 //        http.exceptionHandling( exception -> exception
@@ -70,8 +73,22 @@ public class WebSecurityConfig  { // (1)
 //
 //        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+//@EnableMethodSecurity
+//@RequiredArgsConstructor
+//public class WebSecurityConfig {
+//
+//    @Autowired
+//    private  JwtTokenFilter jwtTokenFilter ;
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+//          http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                  .addFilterBefore(jwtTokenFilter , UsernamePasswordAuthenticationFilter.class)
+//                .authorizeHttpRequests(request ->{
+//                    request.requestMatchers("**").permitAll();
+//                });
+//        return http.build();
+//    }
 
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService() {
@@ -106,4 +123,4 @@ public class WebSecurityConfig  { // (1)
 //}
 
 
-}
+//}

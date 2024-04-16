@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("${api.prefix}/users")
 public class UserController {
 
     @Autowired
@@ -72,5 +72,8 @@ public class UserController {
     public Object userList(@RequestParam("phone") String phonenumber){
         return userRepository.findByPhoneNumber(phonenumber);
 
+        String token = userService.login(userLoginDTO.getPhoneNumber(),userLoginDTO.getPassword());
+
+        return ResponseEntity.ok(token);
     }
 }

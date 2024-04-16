@@ -2,8 +2,11 @@ package com.project.shopapp.Test;
 
 
 import jakarta.xml.bind.annotation.*;
+import lombok.Data;
 
 import java.util.List;
+
+@Data
 @XmlRootElement(namespace = "http://gpcoder.com/jaxb")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Department {
